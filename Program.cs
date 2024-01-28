@@ -1,32 +1,27 @@
-﻿using Course.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Course.Services;
 
 namespace Course // Note: actual namespace depends on the project name.
 {
+
+    delegate   double BinaryNumericOperation(double n1, double n2);
+
     internal class Program
     {
         static void Main(string[] args)
         {
-             List<Product> list = new List<Product>();
+            double a = 10;
+            double b = 12;
 
-            list.Add(new Product("TV", 900.00));
-            list.Add(new Product("Notebook", 1200.00));
-            list.Add(new Product("Tablet", 450.00));
+            //double result = CalculationService.Sum(a, b); 
 
-            Comparison<Product> comp = (p1, p2) => p1.Name.ToUpper().CompareTo(p2.Name.ToUpper());
+            BinaryNumericOperation op = CalculationService.Sum;
+            //BinaryNumericOperation op = new BinaryNumericOperation(CalculationService.Sum);
 
-            list.Sort(comp);
 
-            foreach (Product p in list)
-            {
-                Console.WriteLine(p);
-            }
+            double result = op(a, b);
+            //double result = op.Invoke(a, b);
+            Console.WriteLine(result);
         }
-
-        //static int CompareProducts(Product p1, Product p2)
-        //{
-        //    return p1.Name.ToUpper().CompareTo(p2.Name.ToUpper());
-        //}
     }
 }
