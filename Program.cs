@@ -1,24 +1,31 @@
 ﻿using System;
-using Course.Services;
+using System.Collections.Generic;
+using Course.Entities;
 
 namespace Course // Note: actual namespace depends on the project name.
 {
-
-    delegate void BinaryNumericOperation(double n1, double n2);
-
     internal class Program
     {
         static void Main(string[] args)
         {
-            double a = 10;
-            double b = 12;
+            List<Product> list = new List<Product>();
 
-            // Lógica do input system na unity
+            list.Add(new Product("TV", 900.00));
+            list.Add(new Product("Mouse", 50.00));
+            list.Add(new Product("Tablet", 350.00));
+            list.Add(new Product("HD Case", 80.90));
 
-            BinaryNumericOperation op = CalculationService.ShowSum;
-            op += CalculationService.ShowMax;
+            list.RemoveAll(ProductTest);
 
-            op.Invoke(a, b);
+            foreach(Product product in list)
+            {
+                Console.WriteLine(product);
+            }
+        }
+
+        public static bool ProductTest(Product p)
+        {
+            return p.Price > 100.00;
         }
     }
 }
