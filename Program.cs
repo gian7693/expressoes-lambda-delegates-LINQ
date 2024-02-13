@@ -15,17 +15,20 @@ namespace Course // Note: actual namespace depends on the project name.
             list.Add(new Product("Tablet", 350.00));
             list.Add(new Product("HD Case", 80.90));
 
-            list.RemoveAll(ProductTest);
+            Action<Product> act = p => { p.Price += p.Price * 0.1; };
 
-            foreach(Product product in list)
+            list.ForEach(p => p.Price += p.Price * 0.1f);
+
+            foreach(Product p in list)
             {
-                Console.WriteLine(product);
+                Console.WriteLine(p);
             }
+
         }
 
-        public static bool ProductTest(Product p)
+        static void UpdatePrice(Product p)
         {
-            return p.Price > 100.00;
+            p.Price += p.Price * 0.1f;
         }
     }
 }
