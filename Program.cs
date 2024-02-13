@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using Course.Entities;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Course // Note: actual namespace depends on the project name.
@@ -12,9 +13,9 @@ namespace Course // Note: actual namespace depends on the project name.
 
         static void Main(string[] args)
         {
-            string path = "C:/Users/Gian/Documents//CURSO C#/C#COMPLETO - PROGRAMAÇÃO ORIENTADA A OBJETOS/Seção 17 - Expressões lambda, delegates, LINQ/Material/in.txt";
+            string path = "C:/Users/Gian/Documents//CURSO C#/C#COMPLETO - PROGRAMAÇÃO ORIENTADA A OBJETOS/Seção 17 - Expressões lambda, delegates, LINQ/Material/in2.txt";
 
-            List<Product> list = new List<Product>();
+            List<Employee> list = new List<Employee>();
 
             try
             {
@@ -24,18 +25,26 @@ namespace Course // Note: actual namespace depends on the project name.
                     {
                         string[] fileds = sr.ReadLine().Split(',');
                         string name = fileds[0];
-                        double price = double.Parse(fileds[1], CultureInfo.InvariantCulture);
-                        list.Add(new Product { Name = name, Price = price });                
+                        string email = fileds[1];
+                        double salary = double.Parse(fileds[2], CultureInfo.InvariantCulture);
+                        list.Add(new Employee { Name = name, Email = email, Salary = salary });                
                     }
 
-                    var average = list.Select(p => p.Price).DefaultIfEmpty(0.0).Average();
-                    Console.WriteLine("Average: " + average.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.Write("Enter salary: ");
+                    double value = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                    var r2 = list.Where(p => p.Price < average).OrderByDescending(p => p.Name).Select(p => p.Name); 
-                    foreach(var p in r2)
+                    var emails = list.Where(p => p.Salary > value).OrderBy(p => p.Email).Select(p => p.Email);
+                   
+
+                    var sum = list.Where((p) => p.Name.ToLower().StartsWith('m')).Sum(p => p.Salary);
+
+                    Console.WriteLine("Email of people whose salary is more than " + value.ToString("F2", CultureInfo.InvariantCulture) + ":");
+                    foreach (string email in emails)
                     {
-                        Console.WriteLine(p);
+                        Console.WriteLine(email);
                     }
+
+                    Console.WriteLine("Sum of salary of people whose name starts with 'M': " + sum.ToString("F2", CultureInfo.InvariantCulture));
                 }
 
             }
