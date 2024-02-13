@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Course.Entities;
+using System.Linq;
 
 namespace Course // Note: actual namespace depends on the project name.
 {
@@ -15,20 +16,18 @@ namespace Course // Note: actual namespace depends on the project name.
             list.Add(new Product("Tablet", 350.00));
             list.Add(new Product("HD Case", 80.90));
 
-            Action<Product> act = p => { p.Price += p.Price * 0.1; };
+            //Func<Product, string> func = p => p.Name.ToUpper();
 
-            list.ForEach(p => p.Price += p.Price * 0.1f);
-
-            foreach(Product p in list)
+            List<string> result = list.Select(p => p.Name.ToUpper()).ToList();
+            foreach (var p in result)
             {
                 Console.WriteLine(p);
             }
-
         }
 
-        static void UpdatePrice(Product p)
-        {
-            p.Price += p.Price * 0.1f;
-        }
+        //static string NameUpper(Product p)
+        //{
+        //    return p.Name.ToUpper();
+        //}
     }
 }
